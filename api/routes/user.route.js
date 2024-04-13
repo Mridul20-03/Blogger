@@ -1,5 +1,6 @@
 import express from 'express';
-import { test } from '../controllers/user.controller.js';
+import { test , updateUser } from '../controllers/user.controller.js';
+import { verifyToken } from '../utils/verifyUser.js';
 
 const router = express.Router();
 
@@ -7,5 +8,8 @@ const router = express.Router();
 //res is what we get from API
 
 router.get('/test', test);
+//put means we update something
+//before calling udate we need to verify
+router.put('/update/:userId',verifyToken,updateUser);
 
 export default router;

@@ -1,6 +1,6 @@
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
-import { hanleError } from "../utils/handleError.js";
+import { handleError } from "../utils/handleError.js";
 import jwt from "jsonwebtoken";
 
 //we use next to use middleware
@@ -15,7 +15,7 @@ export const signUp = async (req, res, next) => {
     email === "" ||
     password === ""
   ) {
-    return next(hanleError(400, "All fields are required"));
+    return next(handleError(400, "All fields are required"));
   }
 
   const hashedPassword = bcryptjs.hashSync(password, 10);
@@ -36,7 +36,7 @@ export const signUp = async (req, res, next) => {
 export const signIn = async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password || email === "" || password === "") {
-    return next(hanleError(400, "All fields are required"));
+    return next(handleError(400, "All fields are required"));
   }
 
   try {
@@ -45,7 +45,7 @@ export const signIn = async (req, res, next) => {
     const validPassword = bcryptjs.compareSync(password, validUser.password);
 
     if (!validUser || !validPassword) {
-      return next(hanleError(404, "Invalid Credentials"));
+      return next(handleError(404, "Invalid Credentials"));
     }
 
     //generate a JWT
