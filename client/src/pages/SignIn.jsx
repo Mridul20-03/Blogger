@@ -1,13 +1,21 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import React, { useState } from "react";
 import { Link , useNavigate } from "react-router-dom";
-
+import { signInStart , signInFailure , signInSuccess } from "../redux_store/user/userSlice.js";
+import { useDispatch , useSelector} from "react-redux";
+import OAuth from "../components/OAuth.jsx";
 
 const SignIn = () => {
+  
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { loading , error : errorMessage } = useSelector(state => state.user);
+
+
   const [formData , setFormData] = useState({});
-  const [ errorMessage , setErrorMessage ] = useState(null);
-  const [ loading , setLoading ] = useState(false);
+  
+  
   const handleChange = (e) => {
     setFormData({ ...formData , [e.target.id]: e.target.value.trim() });
   }
@@ -15,14 +23,13 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
       e.preventDefault();
       if(!formData.password || !formData.email){
-        return setErrorMessage('Please fill out all the fields');
+        return dispatch(signInFailure('Please fill out all the fields'));
       }
 
 
       try{
 
-        setErrorMessage(null);
-        setLoading(true);
+        dispatch(signInStart());
         const res = await fetch('/api/auth/signin', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -31,17 +38,16 @@ const SignIn = () => {
         const data  = await res.json();
 
         if(data.success === false){
-          return setErrorMessage(data.message);
+          dispatch(signInFailure(data.message));
         }
 
-        setLoading(false);
 
         if(res.ok){
+          dispatch(signInSuccess(data));
           navigate('/');
         }
       }catch(err){
-          setErrorMessage(err.message);
-          setLoading(false);
+        dispatch(signInFailure(data.message));
       }
 
   } 
@@ -90,6 +96,8 @@ const SignIn = () => {
                 ) : ' Sign In'
               }
             </Button>
+
+            <OAuth />
           </form>
 
 
