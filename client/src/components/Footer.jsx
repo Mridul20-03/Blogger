@@ -25,7 +25,7 @@ const FooterComp = () => {
         <div>
         <Footer.Title title='About' />
         <Footer.LinkGroup col>
-            <Footer.Link href='https://www.google.com'
+            <Footer.Link href='https://github.com/Mridul20-03'
             target='_blank'
             rel='noopener  noreferrer'>
                 Example Projects
@@ -49,7 +49,7 @@ const FooterComp = () => {
                 Github
             </Footer.Link>
 
-            <Footer.Link href='#'
+            <Footer.Link href='https://www.instagram.com/mridul20_03/'
             target='_blank'
             rel='noopener  noreferrer'>
             Instagram
@@ -79,11 +79,11 @@ const FooterComp = () => {
             <Footer.Copyright href='#' by="Mridul's Blog" year={new Date().getFullYear()} />
 
         <div className='flex gap-6 sm:mt-0 mt-4 sm:justify-center'>
-            <Footer.Icon href='#' icon = {BsFacebook}/>
-            <Footer.Icon href='#' icon = {BsInstagram}/>
+            
+            <Footer.Icon href='https://www.instagram.com/mridul20_03/' icon = {BsInstagram}/>
             <Footer.Icon href='https://github.com/Mridul20-03' icon = {BsGithub}/>
-            <Footer.Icon href='#' icon = {BsTwitter}/>
-            <Footer.Icon href='#' icon = {BsFacebook}/>
+            <Footer.Icon href='https://twitter.com/MridulJ19951671' icon = {BsTwitter}/>
+            <Footer.Icon href='https://www.facebook.com/profile.php?id=100079654712796' icon = {BsFacebook}/>
         </div>
         </div>
       </div>
