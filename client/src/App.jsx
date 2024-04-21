@@ -4,7 +4,6 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
-import Projects from './pages/Projects';
 import About from './pages/About';
 import Header from './components/Header';
 import FooterComp from './components/Footer';
@@ -14,6 +13,8 @@ import CreatePost from './pages/CreatePost';
 import UpdatePost from './pages/UpdatePost';
 import PostPage from './pages/PostPage';
 import ScrollToTop from './components/ScrollToTop';
+import SearchPage from './pages/SearchPage';
+import ContactUs from './pages/ContactUs';
 
 const App = () => {
   return (
@@ -25,7 +26,8 @@ const App = () => {
       <Route path="/about" element={<About />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/sign-up" element={<SignUp />} />
-      <Route path='/projects' element={<Projects />} />
+      <Route path='/contactus' element={<ContactUs />} />
+      <Route path='/search' element={<SearchPage />} />
 
       <Route element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />

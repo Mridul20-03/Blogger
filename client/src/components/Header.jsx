@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Button, Dropdown, Navbar, NavbarToggle, TextInput } from "flowbite-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation , useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon , FaSun } from "react-icons/fa";
 import { useSelector , useDispatch } from "react-redux";
@@ -13,6 +13,16 @@ const Header = () => {
   const { theme } = useSelector( (state) => state.theme);
   const pathName = useLocation().pathname;
   const dispatch = useDispatch();
+  const [searchTerm , setSearchTerm] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get('searchTerm');
+    if(searchTermFromUrl){
+      setSearchTerm(searchTermFromUrl);
+    }
+  }, [location.search]);
   
   const handleSignOut = async () => {
     try{
@@ -30,6 +40,14 @@ const Header = () => {
       console.log(err.message);
     }
 };
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const urlParams = new URLSearchParams(location.search);
+  urlParams.set('searchTerm',searchTerm);
+  const searchQuery = urlParams.toString();
+  navigate(`/search?${searchQuery}`);
+};
   
   return (
     <Navbar className="border-b-2">
@@ -42,20 +60,22 @@ const Header = () => {
         </span>
         Blog
       </Link>
-      <form>
+      <form onSubmit={handleSubmit}>
         <TextInput
           type="text"
           placeholder="Search.."
           rightIcon={AiOutlineSearch}
           className="hidden lg:inline"
+          value = {searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </form>
 
-      <Button className="w-12 h-10 lg:hidden" color="gray" pill>
+      <Button className="w-12 h-10 lg:hidden" color="gray" pill onClick={() => navigate('/search')}>
         <AiOutlineSearch />
       </Button>
 
-      <div className="flex gap-2 md:order-2">
+      <div className="flex gap-3 md:order-4">
         <Button className="w-12 h-10 hidden sm:inline" color="gray" pill onClick={() => dispatch(toggleTheme())}>
           { theme === 'light' ? (<FaMoon />) : (<FaSun />) }
           
@@ -100,8 +120,8 @@ const Header = () => {
         <Navbar.Link active={pathName === "/about"} as={"div"}>
           <Link to="/about">About</Link>
         </Navbar.Link>
-        <Navbar.Link as={"div"} active={pathName === "/projects"}>
-          <Link to="/projects">Projects</Link>
+        <Navbar.Link as={"div"} active={pathName === "/contactus"}>
+          <Link to="/contactus">Contact Us</Link>
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
