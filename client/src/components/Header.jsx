@@ -76,7 +76,7 @@ const handleSubmit = (e) => {
       </Button>
 
       <div className="flex gap-3 md:order-4">
-        <Button className="w-12 h-10 hidden sm:inline" color="gray" pill onClick={() => dispatch(toggleTheme())}>
+        <Button className="w-12 h-10 sm:inline" color="gray" pill onClick={() => dispatch(toggleTheme())}>
           { theme === 'light' ? (<FaMoon />) : (<FaSun />) }
           
         </Button>
